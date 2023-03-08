@@ -12,9 +12,9 @@ class NavBarForm extends React.Component {
 
     handleClick = () => {
         this.setState((prevState) => ({
-            buttonText: prevState.buttonText === "Log out" ? "Log in" : "Log out",
+            buttonText: prevState.buttonText === "Log in" ? "Submit" : "Log in",
+            isLoggedIn: prevState.isLoggedIn === false ? true : false
         }))
-        
     }
     
     render() {
@@ -22,8 +22,23 @@ class NavBarForm extends React.Component {
             <div className= {css.NavBar}>
                 <h1>My Gallery</h1>
                 <div>
+                {this.state.isLoggedIn ? (
+                    
+                    <form>
+                        <label>Username: </label>
+                        <input defaultValue="username"></input>
+                        <label>Password: </label>
+                        <input defaultValue="password"></input>
+                        <button onClick={() => this.handleClick()}>{this.state.buttonText}</button>
+                    </form>
+                ) :
+                (
                     <button onClick={() => this.handleClick()}>{this.state.buttonText}</button>
+                )}
                 </div>
+                
+                    
+                
                 
             </div>
         )

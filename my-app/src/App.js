@@ -8,7 +8,7 @@ function App() {
     <div className={css.App}>
       <Sidebar />
       {/* <NavBarSimple /> */}
-      <NavBarForm/>
+      <NavBarForm />
     </div>
   );
 }
