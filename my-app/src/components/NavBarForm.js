@@ -6,13 +6,13 @@ class NavBarForm extends React.Component {
         super(props);
         this.state = {
             buttonText: "log in",
-            isLoggedIn: true
+            isLoggedIn: false
         }
     }
 
     handleClick = () => {
         this.setState((prevState) => ({
-            buttonText: prevState.buttonText === "Log in" ? "Submit" : "Log in",
+            buttonText: prevState.buttonText === "Submit" ? "Log in" : "Submit",
             isLoggedIn: prevState.isLoggedIn === false ? true : false
         }))
     }
