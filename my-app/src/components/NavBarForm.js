@@ -1,45 +1,28 @@
 import React from "react";
 import css from "./css/NavBarSimple.module.css";
+import NavBarChild from "./NavBarChild";
 
 class NavBarForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonText: "log in",
             isLoggedIn: false
         }
     }
 
     handleClick = () => {
         this.setState((prevState) => ({
-            buttonText: prevState.buttonText === "Submit" ? "Log in" : "Submit",
             isLoggedIn: prevState.isLoggedIn === false ? true : false
-        }))
+        }), () => console.log(this.state.isLoggedIn))
     }
     
     render() {
         return (
             <div className= {css.NavBar}>
                 <h1>My Gallery</h1>
-                <div>
-                {this.state.isLoggedIn ? (
-                    
-                    <form>
-                        <label>Username: </label>
-                        <input defaultValue="username"></input>
-                        <label>Password: </label>
-                        <input defaultValue="password"></input>
-                        <button onClick={() => this.handleClick()}>{this.state.buttonText}</button>
-                    </form>
-                ) :
-                (
-                    <button onClick={() => this.handleClick()}>{this.state.buttonText}</button>
-                )}
-                </div>
-                
-                    
-                
-                
+                <NavBarChild
+                isLoggedIn={this.state.isLoggedIn}
+                handleClick={this.handleClick} />
             </div>
         )
     }
