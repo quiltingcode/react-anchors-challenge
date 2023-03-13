@@ -1,42 +1,31 @@
-import React, { Component } from 'react'
+import React, {useState, useEffect} from 'react';
 import {savedPosts} from '../posts.json'
 import css from "./css/Content.module.css";
 import PostItem from './PostItem';
 import Loader from './Loader';
 
-export class ContentHooks extends Component {
+function ContentHooks() {
 
-    constructor(props) {
-      super(props)
-      this.state = {
-         isLoaded: false,
-         posts: [],
-      }
-    }
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [fetchedPosts, setFetchedPosts] = useState([]);
 
-    componentDidMount() {
-        console.log('component mounted')
-        setTimeout(() => {
-          this.setState({
-            isLoaded: true,
-            posts: savedPosts,
-          })
-        }, 2000)
-      }
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true)
+      setFetchedPosts(savedPosts)
+    }, 2000)
+  }, []);
 
-      handleChange = (event) => {
-        const name = event.target.value.toLowerCase();
-        const filteredPosts = savedPosts.filter((post) => {
-          return post.name.toLowerCase().includes(name);
-      })
-        this.setState({
-          posts: filteredPosts
-        })
-      }
+  const handleChange = (event) => {
+    const name = event.target.value.toLowerCase();
+    const filteredPosts = savedPosts.filter((post) => {
+      return post.name.toLowerCase().includes(name);
+  })
+    setFetchedPosts(filteredPosts)
+  }
 
-  render() {
-    return (
-      <div className={css.Content} >
+  return (
+    <div className={css.Content} >
         <div className= {css.TitleBar}>
             <h1>My Photos</h1>
             <form>
@@ -46,22 +35,21 @@ export class ContentHooks extends Component {
                 name="searchinput"
                 type="search"
                 placeholder="By Author"
-                onChange={(event) => this.handleChange(event)}
+                onChange={(event) => handleChange(event)}
               />
-              <h4>posts found: {this.state.posts.length}</h4>
+              <h4>posts found: {fetchedPosts.length}</h4>
             </form>
         </div>
         <div className= {css.SearchResults}>
-          {this.state.isLoaded ? (
-            <PostItem savedPosts={this.state.posts}/>
+          {isLoaded ? (
+            <PostItem savedPosts={fetchedPosts}/>
           ) : (
             <Loader />
           )}
             
         </div>
       </div>
-    )
-  }
+  )
 }
 
 export default ContentHooks
